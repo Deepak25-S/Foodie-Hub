@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foodie Hub - Delicious Cravings Delivered</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement-bar">
+    <p>⚡ FASTEST DELIVERY IN TOWN | USE CODE <span>FOODIE50</span> FOR 50% OFF YOUR FIRST ORDER! ⚡</p>
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Foodie Hub</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#home" class="active">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#game">Play & Win</a>
+        <a href="#about">About</a>
+      </nav>
+      <div class="nav-actions">
+        <button id="cartBtn" class="cart-icon-btn" onclick="toggleCartDrawer()">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span>Cart</span>
+          <span id="cartCount" class="badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section id="home" class="hero-section">
+    <div class="hero-content">
+      <span class="hero-tag">🔥 Craving Something Delicious?</span>
+      <h1>Taste the Magic of Authentic Flavors</h1>
+      <p>Handcrafted meals, hot pizzas, juicy burgers, and spicy biryanis delivered right to your doorstep in under 30 minutes.</p>
+      <div class="hero-buttons">
+        <a href="#menu" class="btn btn-primary">Explore Menu</a>
+        <a href="#game" class="btn btn-secondary"><i class="fa-solid fa-gamepad"></i> Spin For Discounts</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h3>50k+</h3>
+          <p>Happy Customers</p>
+        </div>
+        <div class="stat-item">
+          <h3>30 Min</h3>
+          <p>Avg Delivery Time</p>
+        </div>
+        <div class="stat-item">
+          <h3>4.9★</h3>
+          <p>Customer Rating</p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="image-circle">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Delicious Food Feast">
+      </div>
+    </div>
+  </section>
+
+  <!-- SPIN & WIN GAME SECTION -->
+  <section id="game" class="game-section">
+    <div class="section-title text-center">
+      <span class="sub-title">🎮 EXCLUSIVE REWARDS</span>
+      <h2>Spin the Lucky Wheel & Win Discounts</h2>
+      <p>Spin the wheel before placing your order to win discount vouchers, free dishes, and secret prizes!</p>
+    </div>
+
+    <div class="game-wrapper">
+      <div class="game-info">
+        <span class="badge-tag">TRY YOUR LUCK</span>
+        <h3>Spin & Win Reward Wheel</h3>
+        <p>Click the button below to start spinning. Your prize will automatically be added to your reward cart once won!</p>
+        
+        <div class="prize-list">
+          <div class="prize-card"><i class="fa-solid fa-tag"></i> <span>10% Off Total Bill</span></div>
+          <div class="prize-card"><i class="fa-solid fa-gift"></i> <span>FREE Surprise Dessert</span></div>
+          <div class="prize-card"><i class="fa-solid fa-percent"></i> <span>15% Flat Discount</span></div>
+          <div class="prize-card"><i class="fa-solid fa-fire"></i> <span>5% Instant Cashback</span></div>
+        </div>
+
+        <button id="spinBtn" class="spin-btn" onclick="spinWheel()">
+          <i class="fa-solid fa-rotate"></i> SPIN NOW
+        </button>
+        <p id="gameResult"></p>
+      </div>
+
+      <div class="wheel-container">
+        <div class="wheel-area">
+          <div class="wheel-pointer">▼</div>
+          <div class="wheel" id="wheel">
+            <div class="slice s1"><span>10%</span></div>
+            <div class="slice s2"><span>FREE</span></div>
+            <div class="slice s3"><span>15%</span></div>
+            <div class="slice s4"><span>5%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOD MENU SECTION -->
+  <section id="menu" class="menu-section">
+    <div class="section-title text-center">
+      <span class="sub-title">🍽️ OUR SPECIALTIES</span>
+      <h2>Explore Our Mouthwatering Menu</h2>
+    </div>
+
+    <div class="menu-categories">
+      <button class="cat-btn active" onclick="filterMenu('all', event)">All Items</button>
+      <button class="cat-btn" onclick="filterMenu('pizza', event)">Pizzas</button>
+      <button class="cat-btn" onclick="filterMenu('burger', event)">Burgers</button>
+      <button class="cat-btn" onclick="filterMenu('biryani', event)">Biryanis</button>
+      <button class="cat-btn" onclick="filterMenu('drinks', event)">Beverages</button>
+    </div>
+
+    <div class="menu-grid" id="menuGrid"></div>
+  </section>
+
+  <!-- CART DRAWER -->
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="drawer-header">
+      <h3><i class="fa-solid fa-bag-shopping"></i> Your Shopping Cart</h3>
+      <span class="close-drawer" onclick="toggleCartDrawer()">&times;</span>
+    </div>
+    <div id="cartItemsList" class="drawer-body"></div>
+    <div class="drawer-footer">
+      <div class="summary-line">
+        <span>Subtotal:</span>
+        <span id="cartSubtotal">$0.00</span>
+      </div>
+      <div class="summary-line total">
+        <span>Total:</span>
+        <span id="cartTotal">$0.00</span>
+      </div>
+      <button class="checkout-btn" onclick="processCheckout()">Proceed to Checkout 🚀</button>
+    </div>
+  </div>
+  <div id="drawerOverlay" class="drawer-overlay" onclick="toggleCartDrawer()"></div>
+
+  <!-- WINNER REWARD MODAL -->
+  <div id="cartModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <div style="font-size: 40px; margin-bottom: 10px;">🎉</div>
+      <h3>Congratulations!</h3>
+      <p id="modalMessage" style="margin-top: 10px; color: #ff9f1c; font-weight: bold;"></p>
+      <button class="add-to-cart-btn" onclick="addRewardToCart()">Claim Prize & Add to Cart 🛒</button>
+    </div>
+  </div>
+
+  <!-- CHECKOUT PAYMENT MODAL -->
+  <div id="checkoutModal" class="modal">
+    <div class="modal-content checkout-box">
+      <span class="close-btn" onclick="closeCheckoutModal()">&times;</span>
+      <h3>Checkout & Delivery Details</h3>
+      <form id="checkoutForm" onsubmit="handleFinalOrder(event)">
+        <div class="form-group">
+          <label for="userName">Full Name</label>
+          <input type="text" id="userName" required placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label for="userAddress">Delivery Address</label>
+          <textarea id="userAddress" required rows="3" placeholder="123 Main St, Apt 4B"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="paymentMethod">Payment Method</label>
+          <select id="paymentMethod" required>
+            <option value="Credit / Debit Card">Credit / Debit Card</option>
+            <option value="UPI / GPay">UPI / GPay</option>
+            <option value="Cash on Delivery">Cash on Delivery</option>
+          </select>
+        </div>
+        <button type="submit" class="submit-order-btn">Place Order 🚀</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <div class="logo">
+          <i class="fa-solid fa-utensils"></i>
+          <span>Foodie Hub</span>
+        </div>
+        <p style="margin-top: 10px; color: var(--text-muted); font-size: 14px;">Serving hot, delicious, and fresh culinary experiences straight to your table or doorstep.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#game">Spin Game</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <p style="color: var(--text-muted); font-size: 14px;">📍 123 Gourmet Street, Foodville</p>
+        <p style="color: var(--text-muted); font-size: 14px;">📞 +1 (555) 019-2834</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Foodie Hub. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
